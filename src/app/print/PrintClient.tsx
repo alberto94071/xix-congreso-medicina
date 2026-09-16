@@ -42,9 +42,6 @@ export default function PrintClient({ asistentes }: { asistentes: Asistente[] })
           width: 100vw;
           height: 100vh;
           position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
           background-image: url('/diploma-base.png');
           background-size: 100% 100%;
           background-repeat: no-repeat;
@@ -53,13 +50,24 @@ export default function PrintClient({ asistentes }: { asistentes: Asistente[] })
           box-sizing: border-box;
         }
 
-        .diploma-name {
-          font-size: 3.5rem;
-          font-weight: 700;
-          color: #1e293b;
+        .diploma-name-container {
+          position: absolute;
+          top: 56%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 85%;
           text-align: center;
-          font-family: 'Outfit', sans-serif;
-          margin-top: 2%; 
+        }
+
+        .diploma-name {
+          font-size: 2.8rem;
+          font-weight: 700;
+          color: #0f172a;
+          text-align: center;
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          line-height: 1.2;
         }
       `}} />
 
@@ -76,7 +84,7 @@ export default function PrintClient({ asistentes }: { asistentes: Asistente[] })
         
         return (
           <div key={asistente.id} className="diploma-page">
-            <div style={{ position: 'relative', zIndex: 10, width: '100%', padding: '0 4rem', textAlign: 'center' }}>
+            <div className="diploma-name-container">
               <h2 className="diploma-name">{nombreCompleto}</h2>
             </div>
           </div>

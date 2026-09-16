@@ -35,14 +35,13 @@ export async function generarDiplomaPDF(nombre: string): Promise<Buffer> {
   const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
 
   // 7. Configuración de texto
-  const textSize = 50
+  const textSize = 40
   const textWidth = font.widthOfTextAtSize(nombre, textSize)
   
   // Centrar el texto horizontalmente
   const x = (pngDims.width / 2) - (textWidth / 2)
-  // Posición vertical (Ajustar este valor dependiendo del diseño de Canva)
-  // pdf-lib tiene el origen (0,0) en la esquina inferior izquierda.
-  const y = (pngDims.height / 2) - 20 
+  // Posición vertical: 58% desde arriba (42% desde abajo) para encajar perfectamente en el espacio en blanco
+  const y = (pngDims.height * 0.42)
 
   // 8. Dibujar el texto (nombre) encima de la imagen
   page.drawText(nombre, {
@@ -50,7 +49,7 @@ export async function generarDiplomaPDF(nombre: string): Promise<Buffer> {
     y,
     size: textSize,
     font: font,
-    color: rgb(0.1, 0.1, 0.1), // Color casi negro
+    color: rgb(0.06, 0.09, 0.16), // Color #0f172a
   })
 
   // 9. Serializar el PDF a bytes (Buffer)
