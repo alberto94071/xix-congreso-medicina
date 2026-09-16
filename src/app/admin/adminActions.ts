@@ -40,7 +40,7 @@ export async function enviarDiplomas(ids: number[]) {
       // Enviar correo (Si no hay API key real, esto fallará, debes configurarla en Vercel)
       if (process.env.RESEND_API_KEY) {
         await resend.emails.send({
-          from: 'Congreso Medicina <diplomas@tu-dominio.com>', // Debe ser un dominio verificado en Resend
+          from: 'XIX Congreso de Medicina <diplomas@xixcongresomedsm.online>',
           to: [asistente.correo],
           subject: 'Tu Diploma de Asistencia - XIX Congreso de Medicina',
           html: `<p>Hola ${nombreCompleto},</p><p>Adjunto encontrarás tu diploma de asistencia al XIX Congreso de Medicina.</p><p>¡Gracias por participar!</p>`,
