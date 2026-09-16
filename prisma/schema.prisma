@@ -15,6 +15,7 @@ model Asistente {
   celular   String?
   colegiado String?
   genero    String?  // 'M' o 'F'
+  tipo      String   @default("Doctor") // 'Doctor' o 'General'
   estado    String   @default("Pendiente") // Pendiente, Impreso, Enviado
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

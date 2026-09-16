@@ -79,7 +79,9 @@ export default function PrintClient({ asistentes }: { asistentes: Asistente[] })
       </div>
 
       {asistentes.map((asistente) => {
-        const prefijo = asistente.genero === 'M' ? 'Dr.' : asistente.genero === 'F' ? 'Dra.' : ''
+        const tipoAsistente = (asistente as any).tipo || 'Doctor'
+        const isDoctor = tipoAsistente !== 'General'
+        const prefijo = isDoctor ? (asistente.genero === 'M' ? 'Dr.' : asistente.genero === 'F' ? 'Dra.' : '') : ''
         const nombreCompleto = `${prefijo} ${asistente.nombre}`.trim()
         
         return (

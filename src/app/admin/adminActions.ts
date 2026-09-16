@@ -31,7 +31,9 @@ export async function enviarDiplomas(ids: number[]) {
   
   for (const asistente of asistentes) {
     try {
-      const prefijo = asistente.genero === 'M' ? 'Dr.' : asistente.genero === 'F' ? 'Dra.' : ''
+      const tipoAsistente = (asistente as any).tipo || 'Doctor'
+      const isDoctor = tipoAsistente !== 'General'
+      const prefijo = isDoctor ? (asistente.genero === 'M' ? 'Dr.' : asistente.genero === 'F' ? 'Dra.' : '') : ''
       const nombreCompleto = `${prefijo} ${asistente.nombre}`.trim()
 
       // Generar PDF

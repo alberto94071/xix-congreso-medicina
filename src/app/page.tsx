@@ -264,12 +264,15 @@ export default function Home() {
 
                 <div className="input-row" style={{ display: 'flex', gap: '1rem' }}>
                   <div style={{ flex: 1 }}>
-                    <label htmlFor="colegiado" style={{ display: 'block', marginBottom: '0.3rem', fontSize: '0.8rem', color: '#475569', fontWeight: 500 }}>
-                      No. Colegiado
+                    <label htmlFor="tipo" style={{ display: 'block', marginBottom: '0.3rem', fontSize: '0.8rem', color: '#475569', fontWeight: 500 }}>
+                      Tipo de Participante
                     </label>
-                    <input type="text" id="colegiado" name="colegiado" placeholder="12345" required disabled={loading} style={{
+                    <select id="tipo" name="tipo" required disabled={loading} style={{
                       width: '100%', padding: '0.6rem 1rem', borderRadius: '0.4rem', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#1e293b'
-                    }}/>
+                    }}>
+                      <option value="Doctor">Médico / Doctor(a)</option>
+                      <option value="General">Asistente / Enfermero(a) / Colaborador(a)</option>
+                    </select>
                   </div>
                   <div style={{ flex: 1 }}>
                     <label htmlFor="genero" style={{ display: 'block', marginBottom: '0.3rem', fontSize: '0.8rem', color: '#475569', fontWeight: 500 }}>
@@ -282,6 +285,17 @@ export default function Home() {
                       <option value="M">Masculino</option>
                       <option value="F">Femenino</option>
                     </select>
+                  </div>
+                </div>
+
+                <div className="input-row" style={{ display: 'flex', gap: '1rem' }}>
+                  <div style={{ flex: 1 }}>
+                    <label htmlFor="colegiado" style={{ display: 'block', marginBottom: '0.3rem', fontSize: '0.8rem', color: '#475569', fontWeight: 500 }}>
+                      No. Colegiado <span style={{ color: '#94a3b8', fontWeight: 400 }}>(Opcional)</span>
+                    </label>
+                    <input type="text" id="colegiado" name="colegiado" placeholder="Ej. 12345 (o dejar vacío)" disabled={loading} style={{
+                      width: '100%', padding: '0.6rem 1rem', borderRadius: '0.4rem', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#1e293b'
+                    }}/>
                   </div>
                 </div>
 

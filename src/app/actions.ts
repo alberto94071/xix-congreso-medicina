@@ -7,12 +7,13 @@ export async function registrarAsistente(formData: FormData) {
   const nombre = formData.get('nombre') as string
   const correo = formData.get('correo') as string
   const celular = formData.get('celular') as string
-  const colegiado = formData.get('colegiado') as string
+  const colegiado = (formData.get('colegiado') as string) || ''
   const genero = formData.get('genero') as string
+  const tipo = (formData.get('tipo') as string) || 'Doctor'
   const clave = formData.get('clave') as string
 
-  if (!nombre || !correo || !celular || !colegiado || !genero || !clave) {
-    return { error: 'Todos los campos son obligatorios.' }
+  if (!nombre || !correo || !celular || !genero || !clave) {
+    return { error: 'Por favor completa todos los campos requeridos.' }
   }
 
   try {
@@ -34,6 +35,7 @@ export async function registrarAsistente(formData: FormData) {
         celular,
         colegiado,
         genero,
+        tipo,
         estado: 'Pendiente'
       }
     })

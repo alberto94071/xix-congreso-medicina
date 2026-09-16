@@ -206,7 +206,9 @@ export default function AdminClient({ initialAsistentes, initialClave }: AdminCl
             </thead>
             <tbody>
               {filteredAsistentes.map(asistente => {
-                const prefijo = asistente.genero === 'M' ? 'Dr.' : asistente.genero === 'F' ? 'Dra.' : ''
+                const tipoAsistente = (asistente as any).tipo || 'Doctor'
+                const isDoctor = tipoAsistente !== 'General'
+                const prefijo = isDoctor ? (asistente.genero === 'M' ? 'Dr.' : asistente.genero === 'F' ? 'Dra.' : '') : ''
                 const nombreCompleto = `${prefijo} ${asistente.nombre}`.trim()
                 const isSelected = selectedIds.has(asistente.id)
                 
