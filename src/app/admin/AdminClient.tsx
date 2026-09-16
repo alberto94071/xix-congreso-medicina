@@ -208,18 +208,30 @@ export default function AdminClient({ initialAsistentes, initialClave }: AdminCl
               {filteredAsistentes.map(asistente => {
                 const prefijo = asistente.genero === 'M' ? 'Dr.' : asistente.genero === 'F' ? 'Dra.' : ''
                 const nombreCompleto = `${prefijo} ${asistente.nombre}`.trim()
+                const isSelected = selectedIds.has(asistente.id)
                 
                 return (
-                <tr key={asistente.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                <tr 
+                  key={asistente.id} 
+                  onClick={() => toggleSelect(asistente.id)}
+                  style={{ 
+                    borderBottom: '1px solid rgba(255,255,255,0.05)',
+                    cursor: 'pointer',
+                    background: isSelected ? 'rgba(59, 130, 246, 0.12)' : 'transparent',
+                    transition: 'background 0.15s ease',
+                    userSelect: 'none'
+                  }}
+                >
                   <td style={{ padding: '1rem' }}>
                     <input 
                       type="checkbox" 
-                      checked={selectedIds.has(asistente.id)}
-                      onChange={() => toggleSelect(asistente.id)}
+                      checked={isSelected}
+                      readOnly
+                      style={{ cursor: 'pointer', width: '18px', height: '18px' }}
                     />
                   </td>
                   <td style={{ padding: '1rem' }}>#{asistente.id}</td>
-                  <td style={{ padding: '1rem', fontWeight: 500 }}>{nombreCompleto}</td>
+                  <td style={{ padding: '1rem', fontWeight: 600 }}>{nombreCompleto}</td>
                   <td style={{ padding: '1rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                     <div>{asistente.correo}</div>
                     <div>{asistente.celular}</div>
