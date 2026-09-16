@@ -45,38 +45,38 @@ export default function PrintClient({ asistentes }: { asistentes: Asistente[] })
           display: flex;
           align-items: center;
           justify-content: center;
-          /* Aquí iría la imagen de fondo de Canva, por ahora un fondo placeholder */
-          background-color: #f8fafc;
-          background-size: cover;
+          background-image: url('/diploma-base.png');
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
           background-position: center;
           overflow: hidden;
+          box-sizing: border-box;
         }
 
         .diploma-name {
-          font-size: 4rem;
+          font-size: 3.5rem;
           font-weight: 700;
           color: #1e293b;
           text-align: center;
           font-family: 'Outfit', sans-serif;
-          /* Ajustar la posición vertical según el diseño en Canva */
-          margin-top: 5%; 
+          margin-top: 2%; 
         }
       `}} />
 
       <div className="no-print" style={{ padding: '1rem', background: '#3b82f6', color: '#fff', textAlign: 'center' }}>
         <p>Preparando documento para impresión...</p>
         <button onClick={() => window.print()} style={{ marginTop: '0.5rem', background: '#fff', color: '#3b82f6', padding: '0.5rem 1rem', borderRadius: '4px', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>
-          Imprimir Ahora
+          🖨️ Imprimir Ahora
         </button>
       </div>
 
-      {asistentes.map((asistente, i) => {
+      {asistentes.map((asistente) => {
         const prefijo = asistente.genero === 'M' ? 'Dr.' : asistente.genero === 'F' ? 'Dra.' : ''
         const nombreCompleto = `${prefijo} ${asistente.nombre}`.trim()
         
         return (
-          <div key={asistente.id} className="diploma-page" style={{ /* backgroundImage: "url('/diploma-fondo.png')" */ }}>
-            <div style={{ position: 'relative', zIndex: 10, width: '100%', padding: '0 4rem' }}>
+          <div key={asistente.id} className="diploma-page">
+            <div style={{ position: 'relative', zIndex: 10, width: '100%', padding: '0 4rem', textAlign: 'center' }}>
               <h2 className="diploma-name">{nombreCompleto}</h2>
             </div>
           </div>
