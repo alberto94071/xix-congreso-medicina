@@ -15,11 +15,32 @@ export default function Home() {
     const interval = setInterval(() => {
       setBgIndex((prev) => (prev + 1) % FONDOS.length)
     }, 5000) // Cambia cada 5 segundos
+
+    // Verificar si el dispositivo ya alcanzó el límite
+    const conteo = parseInt(localStorage.getItem('registros_realizados') || '0', 10)
+    if (conteo >= 2) {
+      setMessage({
+        text: '⚠️ Este dispositivo ya ha alcanzado el límite máximo de 2 registros. Si necesitas asistencia adicional, por favor dirígete a la mesa de registro.',
+        type: 'error'
+      })
+    }
+
     return () => clearInterval(interval)
   }, [])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    
+    // Verificar límite de dispositivo
+    const conteo = parseInt(localStorage.getItem('registros_realizados') || '0', 10)
+    if (conteo >= 2) {
+      setMessage({
+        text: '⚠️ Este dispositivo ya ha alcanzado el límite máximo de 2 registros permitidos.',
+        type: 'error'
+      })
+      return
+    }
+
     setLoading(true)
     setMessage(null)
 
@@ -29,6 +50,7 @@ export default function Home() {
     if (res?.error) {
       setMessage({ text: res.error, type: 'error' })
     } else if (res?.success) {
+      localStorage.setItem('registros_realizados', (conteo + 1).toString())
       setSuccess(true)
     }
     setLoading(false)
