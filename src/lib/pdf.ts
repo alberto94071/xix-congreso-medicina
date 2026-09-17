@@ -1,6 +1,7 @@
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'
 import fs from 'fs'
 import path from 'path'
+import { capitalizarNombre } from './text'
 
 export async function generarDiplomaPDF(nombre: string): Promise<Buffer> {
   // 1. Cargar la imagen base del diploma desde /public
@@ -34,25 +35,30 @@ export async function generarDiplomaPDF(nombre: string): Promise<Buffer> {
   // 6. Incrustar la fuente
   const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
 
-  // 7. Configuración de texto
-  const textSize = 40
-  const textWidth = font.widthOfTextAtSize(nombre, textSize)
-  
+  // 7. Normalizar el nombre: primera letra de cada nombre/apellido en mayúscula,
+  // sin importar cómo lo haya escrito la persona al registrarse
+  const nombreFormateado = capitalizarNombre(nombre)
+
+  // 8. Configuración de texto
+  const textSize = 72
+  const textWidth = font.widthOfTextAtSize(nombreFormateado, textSize)
+
   // Centrar el texto horizontalmente
   const x = (pngDims.width / 2) - (textWidth / 2)
-  // Posición vertical: 58% desde arriba (42% desde abajo) para encajar perfectamente en el espacio en blanco
-  const y = (pngDims.height * 0.42)
+  // Posición vertical: 46.7% desde arriba (53.3% desde abajo), calibrada para el espacio
+  // en blanco entre "otorgado a" y la línea, sobre el diploma-base.png actual
+  const y = (pngDims.height * 0.533)
 
-  // 8. Dibujar el texto (nombre) encima de la imagen
-  page.drawText(nombre, {
+  // 9. Dibujar el texto (nombre) encima de la imagen
+  page.drawText(nombreFormateado, {
     x,
     y,
     size: textSize,
     font: font,
-    color: rgb(0.06, 0.09, 0.16), // Color #0f172a
+    color: rgb(0.145, 0.129, 0.38), // Color #252161, tomado del texto del diploma
   })
 
-  // 9. Serializar el PDF a bytes (Buffer)
+  // 10. Serializar el PDF a bytes (Buffer)
   const pdfBytes = await pdfDoc.save()
   return Buffer.from(pdfBytes)
 }
