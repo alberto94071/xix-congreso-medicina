@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Asistente } from '@prisma/client'
 import { guardarClave, enviarDiplomas } from './adminActions'
+import { capitalizarNombre, construirNombreCompleto } from '@/lib/text'
 
 interface AdminClientProps {
   initialAsistentes: Asistente[]
@@ -206,10 +207,11 @@ export default function AdminClient({ initialAsistentes, initialClave }: AdminCl
             </thead>
             <tbody>
               {filteredAsistentes.map(asistente => {
-                const tipoAsistente = (asistente as any).tipo || 'Doctor'
-                const isDoctor = tipoAsistente !== 'General'
-                const prefijo = isDoctor ? (asistente.genero === 'M' ? 'Dr.' : asistente.genero === 'F' ? 'Dra.' : '') : ''
-                const nombreCompleto = `${prefijo} ${asistente.nombre}`.trim()
+                const nombreCompleto = capitalizarNombre(construirNombreCompleto({
+                  nombre: asistente.nombre,
+                  genero: asistente.genero,
+                  tipo: (asistente as any).tipo,
+                }))
                 const isSelected = selectedIds.has(asistente.id)
                 
                 return (
