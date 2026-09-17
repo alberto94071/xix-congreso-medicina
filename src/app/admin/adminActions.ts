@@ -16,6 +16,7 @@ export async function guardarClave(clave: string) {
 
 import { Resend } from 'resend'
 import { generarDiplomaPDF } from '@/lib/pdf'
+import { construirNombreCompleto } from '@/lib/text'
 
 // En desarrollo podemos omitir la API key real
 const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy')
@@ -31,10 +32,11 @@ export async function enviarDiplomas(ids: number[]) {
   
   for (const asistente of asistentes) {
     try {
-      const tipoAsistente = (asistente as any).tipo || 'Doctor'
-      const isDoctor = tipoAsistente !== 'General'
-      const prefijo = isDoctor ? (asistente.genero === 'M' ? 'Dr.' : asistente.genero === 'F' ? 'Dra.' : '') : ''
-      const nombreCompleto = `${prefijo} ${asistente.nombre}`.trim()
+      const nombreCompleto = construirNombreCompleto({
+        nombre: asistente.nombre,
+        genero: asistente.genero,
+        tipo: (asistente as any).tipo,
+      })
 
       // Generar PDF
       const pdfBuffer = await generarDiplomaPDF(nombreCompleto)
