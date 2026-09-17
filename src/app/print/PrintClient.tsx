@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { Asistente } from '@prisma/client'
+import { capitalizarNombre } from '@/lib/text'
 
 // Este componente utiliza window.print() nativo.
 export default function PrintClient({ asistentes }: { asistentes: Asistente[] }) {
@@ -52,7 +53,7 @@ export default function PrintClient({ asistentes }: { asistentes: Asistente[] })
 
         .diploma-name-container {
           position: absolute;
-          top: 56%;
+          top: 46.5%;
           left: 50%;
           transform: translate(-50%, -50%);
           width: 85%;
@@ -60,9 +61,9 @@ export default function PrintClient({ asistentes }: { asistentes: Asistente[] })
         }
 
         .diploma-name {
-          font-size: 2.8rem;
+          font-size: 1.92vw;
           font-weight: 700;
-          color: #0f172a;
+          color: #252161;
           text-align: center;
           font-family: 'Helvetica Neue', Arial, sans-serif;
           margin: 0;
@@ -82,8 +83,8 @@ export default function PrintClient({ asistentes }: { asistentes: Asistente[] })
         const tipoAsistente = (asistente as any).tipo || 'Doctor'
         const isDoctor = tipoAsistente !== 'General'
         const prefijo = isDoctor ? (asistente.genero === 'M' ? 'Dr.' : asistente.genero === 'F' ? 'Dra.' : '') : ''
-        const nombreCompleto = `${prefijo} ${asistente.nombre}`.trim()
-        
+        const nombreCompleto = capitalizarNombre(`${prefijo} ${asistente.nombre}`.trim())
+
         return (
           <div key={asistente.id} className="diploma-page">
             <div className="diploma-name-container">
